@@ -265,8 +265,26 @@ public class Engine {
     }
 
     public boolean doVersion() {
-        System.out.println(" TODO   [A內政-亞歷山大圖書館 科技生產+1，文化生產+1，內政手牌上限+1，軍事手牌上限+1]  ");
+      //  System.out.println(" TODO   [A內政-亞歷山大圖書館 科技生產+1，文化生產+1，內政手牌上限+1，軍事手牌上限+1]  ");
         //getBuildingLimit()
+                System.out.println("  === ver 0.76 ===  2014-5-9, 11:47, by Max　");
+        System.out.println("    1. 繼續解析牌的內容 ");
+        System.out.println("    2. 改變牌內容的寫法 由+改為: 由-改為:- ");
+        System.out.println("    BUG \n1140 新聞業=>=>科技生產:2;文化生產:2\n" +
+"科技生產:2\n" +
+"文化生產:2\n" +
+"----------------------------已解析-----------------------------------\n" +
+"文化生產:2\n" +
+"科技生產:2\n" +
+"文化生產:2\n" +
+"文化生產:2\n" +
+"----------------------------解析結果-----------------------------------\n" +
+"是否全部解析完畢?false\n" +
+"應該解析個數:2\n" +
+"已解析個數4 ");
+        System.out.println("TODO ");
+        
+        /*
         System.out.println("  === ver 0.75 ===  2014-5-8, 1:11, by Max　");
         System.out.println("    1. 解析牌的內容 ");
         System.out.println("    2. 改變某些牌內容的寫法 ");
@@ -664,6 +682,8 @@ public class Engine {
         System.out.println("    2. X最大版本,基本功能尚未完備前為0");
         System.out.println("    3. Y中版本,任何和業務邏輯相關的新增移除功能,Y版本+1,只要Y的值增加,Z值歸0,當有重大結構性調整時仍然歸屬在Y版本");
         System.out.println("    4. Z最小版本,任何使用者介面的調整或增刪說明,與功能無關");
+                
+                */
         return true;
     }
 }

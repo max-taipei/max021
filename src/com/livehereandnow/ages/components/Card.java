@@ -59,6 +59,7 @@ public class Card implements CardType {
 
     public Card(int ID, String 卡名, int 時代, int 牌背, int 類型, int 顏色, String 右上, String 內容, String 建造成本) {
 
+        this.set是否完全解析完畢(false);
         this.右上 = 右上;
         this.內容 = 內容;
         this.顏色 = 顏色;
@@ -77,51 +78,129 @@ public class Card implements CardType {
 //        if (右上.equals("政府")) {
         // ver 0.60, not limited to 政府, apply to all
 //        if (true) {
-            if (false) {
+        if (true) {
+//            boolean isDone = false;
+            
+            int todoCnt = 0;
+            int doneCnt = 0;
+
             String cmd = 內容;
             String[] strTokens = cmd.split(";");// **it's in Chinese, 2 bytes***
 //            System.out.println(strTokens);
             System.out.println("===================================================================");
-                System.out.println("\n" +this.ID +"" + this.卡名 + "=>=>" + this.內容); 
+            System.out.println("\n" + this.ID + " " + this.卡名 + "=>=>" + this.內容);
             for (String item : strTokens) {
-                 System.out.println(item);
+                System.out.println(item);
+                todoCnt++;
 //                 System.out.println("--------------------------------------------------------------");
-                
-             }
-              System.out.println("--------------------------------------------------------------");
-            for (String item : strTokens) {
-                if (item.length() > 0) {
-                    String[] strTokens2 = item.split("[+]");
-//                    String[] strTokens2 = item.split("[-]");
-                    if (strTokens2[0].equals("內政點數")) {                    
-                        System.out.println("內政點數=" + strTokens2[1]);;
-                        this.whitePoints.setPoints(Integer.parseInt(strTokens2[1]));
-                    }
-                    if (strTokens2[0].equals("軍事點數")) {
-                        System.out.println("...軍事點數=" + strTokens2[1]);
-                        this.redPoints.setPoints(Integer.parseInt(strTokens2[1]));
-                    }
-                    if (strTokens2[0].equals("建築上限")) {
-                        System.out.println("建築上限=" + strTokens2[1]);;
-                    }
-                }
-                if (item.length() > 0) {
-                    String[] strTokens2 = item.split("[-]");
-//                    String[] strTokens2 = item.split("[-]");
-                    if (strTokens2[0].equals("內政點數")) {                    
-                        System.out.println("內政點數=-" + strTokens2[1]);;
-                        this.whitePoints.setPoints(Integer.parseInt(strTokens2[1]));
-                    }
-                    if (strTokens2[0].equals("軍事點數")) {
-                        System.out.println("...軍事點數=-" + strTokens2[1]);
-                        this.redPoints.setPoints(Integer.parseInt(strTokens2[1]));
-                    }
-                    if (strTokens2[0].equals("建築上限")) {
-                        System.out.println("建築上限=-" + strTokens2[1]);;
-                    }
-                }
+
             }
+            System.out.println("----------------------------已解析-----------------------------------");
+            for (String item : strTokens) {//按每個句子解析，句子是按分號區隔開來的
+                if (item.length() > 0) {
+//                    String[] strTokens2 = item.split("[+]");
+                    String[] strTokens2 = item.split("[:]");//以冒號隔開，左邊的為key，右邊的val
+
+                    String key = strTokens2[0];//key是字符串
+                    int val = -999;//val是整數，使用Integer的解析功能，如果不能解析成整數，系統會報錯
+                    try {
+                        val = Integer.parseInt(strTokens2[1]);//val是整數，使用Integer的解析功能，如果不能解析成整數，系統會報錯
+                    } catch (Exception ex) {
+
+                    }
+                    if (key.equals("內政點數")) {
+                        System.out.println("內政點數:" + val);
+                        this.whitePoints.setPoints(val);
+                        doneCnt++;
+                    }
+                    if (key.equals("軍事點數")) {
+                        System.out.println("軍事點數:" + val);
+//                        System.out.println("1234567");
+                        this.redPoints.setPoints(val);
+                        doneCnt++;
+                    }
+                    if (key.equals("建築上限")) {
+                        System.out.println("建築上限:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("文化生產")) {
+                        System.out.println("文化生產:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("科技生產")) {
+                        System.out.println("文化生產:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("內政手牌上限")) {
+                        System.out.println("內政手牌上限:" + val);
+                        doneCnt++;
+                    }
+
+                    if (key.equals("軍事手牌上限")) {
+                        System.out.println("軍事手牌上限:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("軍力")) {
+                        System.out.println("軍力:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("每個玩家免費擴充人口")) {
+                        System.out.println("每個玩家免費擴充人口:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("資源")) {
+                        System.out.println("資源:" + val);
+                        doneCnt++;
+                    }
+                    
+                    if (key.equals("食物")) {
+                        System.out.println("食物:" + val);
+                        doneCnt++;
+                    }
+                    
+                    if (key.equals("科技")) {
+                        System.out.println("科技:" + val);
+                        doneCnt++;
+                    }
+                    
+                    if (key.equals("文化")) {
+                        System.out.println("文化:" + val);
+                        doneCnt++;
+                    }
+                    
+                    if (key.equals("科技生產")) {
+                        System.out.println("科技生產:" + val);
+                        doneCnt++;
+                    }
+                    
+                    if (key.equals("文化生產")) {
+                        System.out.println("文化生產:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("黃點")) {
+                        System.out.println("黃點:" + val);
+                        doneCnt++;
+                    }
+                    if (key.equals("藍點")) {
+                        System.out.println("藍點:" + val);
+                        doneCnt++;
+                    }
+                }
+
+            }
+            System.out.println("----------------------------解析結果-----------------------------------");
+            if (doneCnt == todoCnt) {
+//                isDone = true;
+                this.是否完全解析完畢=true;
+                
+            }
+            System.out.println("是否全部解析完畢?" + 是否完全解析完畢);
+
+            System.out.println("應該解析個數:" + todoCnt);
+
+            System.out.println("已解析個數" + doneCnt);
         }
+//        System.out.println("顯示幾張牌");
     }
 
     public String get右上() {
@@ -135,6 +214,9 @@ public class Card implements CardType {
     public String get內容() {
         return 內容;
     }
+//    public String get解析結果() {
+//        return 內容;
+//    }
 
     public void set內容(String 內容) {
         this.內容 = 內容;
@@ -166,6 +248,13 @@ public class Card implements CardType {
 
 //    public String get建造成本() {
 //        return 建造成本;
+    public boolean is是否完全解析完畢() {
+        return 是否完全解析完畢;
+    }
+
+    public void set是否完全解析完畢(boolean 是否完全解析完畢) {
+        this.是否完全解析完畢 = 是否完全解析完畢;
+    }
 //    }
 //
 //    public void set建造成本(String 建造成本) {
@@ -175,6 +264,7 @@ public class Card implements CardType {
     private int 編號;
     private int 加權值;
     private String 內容;
+    private boolean 是否完全解析完畢;
     private int 顏色;
     private int ID;
     private int 牌背;
