@@ -80,7 +80,7 @@ public class Card implements CardType {
 //        if (true) {
         if (true) {
 //            boolean isDone = false;
-            
+
             int todoCnt = 0;
             int doneCnt = 0;
 
@@ -108,91 +108,150 @@ public class Card implements CardType {
                     } catch (Exception ex) {
 
                     }
-                    if (key.equals("內政點數")) {
-                        System.out.println("內政點數:" + val);
-                        this.whitePoints.setPoints(val);
-                        doneCnt++;
-                    }
-                    if (key.equals("軍事點數")) {
-                        System.out.println("軍事點數:" + val);
-//                        System.out.println("1234567");
-                        this.redPoints.setPoints(val);
-                        doneCnt++;
-                    }
-                    if (key.equals("建築上限")) {
-                        System.out.println("建築上限:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("文化生產")) {
-                        System.out.println("文化生產:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("科技生產")) {
-                        System.out.println("文化生產:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("內政手牌上限")) {
-                        System.out.println("內政手牌上限:" + val);
-                        doneCnt++;
-                    }
+                    switch (key) {
+                        case "內政點數":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+                        case "軍事點數":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+                        case "建築上限":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+                        case "內政手牌上限":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+                        case "軍事手牌上限":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+                        case "軍力":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+                        case "資源":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
 
-                    if (key.equals("軍事手牌上限")) {
-                        System.out.println("軍事手牌上限:" + val);
-                        doneCnt++;
+                        case "每個玩家免費擴充人口":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+
+                        case "食物":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+
+                        case "科技":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+
+                        case "文化":
+                            System.out.println(key + ":" + val);
+                            doneCnt++;
+                            break;
+
+                        default:
+                            System.out.println("不知道:" + key);
+
                     }
-                    if (key.equals("軍力")) {
-                        System.out.println("軍力:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("每個玩家免費擴充人口")) {
-                        System.out.println("每個玩家免費擴充人口:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("資源")) {
-                        System.out.println("資源:" + val);
-                        doneCnt++;
-                    }
-                    
-                    if (key.equals("食物")) {
-                        System.out.println("食物:" + val);
-                        doneCnt++;
-                    }
-                    
-                    if (key.equals("科技")) {
-                        System.out.println("科技:" + val);
-                        doneCnt++;
-                    }
-                    
-                    if (key.equals("文化")) {
-                        System.out.println("文化:" + val);
-                        doneCnt++;
-                    }
-                    
-                    if (key.equals("科技生產")) {
-                        System.out.println("科技生產:" + val);
-                        doneCnt++;
-                    }
-                    
-                    if (key.equals("文化生產")) {
-                        System.out.println("文化生產:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("黃點")) {
-                        System.out.println("黃點:" + val);
-                        doneCnt++;
-                    }
-                    if (key.equals("藍點")) {
-                        System.out.println("藍點:" + val);
-                        doneCnt++;
-                    }
+                    /*
+    
+                     if (key.equals("內政點數")) {
+                     System.out.println("內政點數:" + val);
+                     this.whitePoints.setPoints(val);
+                     doneCnt++;
+                     }
+                     if (key.equals("軍事點數")) {
+                     System.out.println("軍事點數:" + val);
+                     //                        System.out.println("1234567");
+                     this.redPoints.setPoints(val);
+                     doneCnt++;
+                     }
+                     if (key.equals("建築上限")) {
+                     System.out.println("建築上限:" + val);
+                     doneCnt++;
+                     }
+
+                     if (key.equals("內政手牌上限")) {
+                     System.out.println("內政手牌上限:" + val);
+                     doneCnt++;
+                     }
+
+                     if (key.equals("軍事手牌上限")) {
+                     System.out.println("軍事手牌上限:" + val);
+                     doneCnt++;
+                     }
+                     if (key.equals("軍力")) {
+                     System.out.println("軍力:" + val);
+                     doneCnt++;
+                     }
+                     if (key.equals("每個玩家免費擴充人口")) {
+                     System.out.println("每個玩家免費擴充人口:" + val);
+                     doneCnt++;
+                     }
+                     if (key.equals("資源")) {
+                     System.out.println("資源:" + val);
+                     doneCnt++;
+                     }
+    
+                     if (key.equals("食物")) {
+                     System.out.println("食物:" + val);
+                     doneCnt++;
+                     }
+
+                     if (key.equals("科技")) {
+                     System.out.println("科技:" + val);
+                     doneCnt++;
+                     }
+
+                     if (key.equals("文化")) {
+                     System.out.println("文化:" + val);
+                     doneCnt++;
+                     }
+
+                     //                    if (key.equals("科技生產")) {
+                     //                        System.out.println("科技生產:" + val);
+                     //                        doneCnt++;
+                     //                    }                   
+                     if (key.equals("文化生產")) {
+                     System.out.println("文化生產:" + val);
+                     doneCnt++;
+                     }
+
+                     //                    if (key.equals("文化生產")) {
+                     //                        System.out.println("文化生產:" + val);
+                     //                        doneCnt++;
+                     //                    }
+                     if (key.equals("科技生產")) {
+                     System.out.println("文化生產:" + val);
+                     doneCnt++;
+                     }
+
+                     if (key.equals("黃點")) {
+                     System.out.println("黃點:" + val);
+                     doneCnt++;
+                     }
+                     if (key.equals("藍點")) {
+                     System.out.println("藍點:" + val);
+                     doneCnt++;
+                     }
+                     */
                 }
 
             }
             System.out.println("----------------------------解析結果-----------------------------------");
             if (doneCnt == todoCnt) {
 //                isDone = true;
-                this.是否完全解析完畢=true;
-                
+                this.是否完全解析完畢 = true;
+
             }
             System.out.println("是否全部解析完畢?" + 是否完全解析完畢);
 
