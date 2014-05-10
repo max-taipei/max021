@@ -7,11 +7,14 @@
  */
 package com.livehereandnow.ages.components;
 
+import static com.livehereandnow.ages.components.CardType.事件;
 import static com.livehereandnow.ages.components.CardType.內政;
 import static com.livehereandnow.ages.components.CardType.棕色;
+import static com.livehereandnow.ages.components.CardType.深綠色;
 import static com.livehereandnow.ages.components.CardType.灰色;
 import static com.livehereandnow.ages.components.CardType.科技;
 import static com.livehereandnow.ages.components.CardType.紅色;
+import static com.livehereandnow.ages.components.CardType.軍事;
 import com.livehereandnow.ages.exception.AgesException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,42 @@ public class Player {
     private Cards cards;
     private Counter civilCounter;
     private Counter militaryCounter;
+    private Counter 建築上限;
+    private Counter 內政手牌上限;
+private Counter 殖民點數;
 
+    public Counter get殖民點數() {
+        return 殖民點數;
+    }
+
+    public void set殖民點數(Counter 殖民點數) {
+        this.殖民點數 = 殖民點數;
+    }
+
+    public Counter get建築上限() {
+        return 建築上限;
+    }
+
+    public void set建築上限(Counter 建築上限) {
+        this.建築上限 = 建築上限;
+    }
+
+    public Counter get內政手牌上限() {
+        return 內政手牌上限;
+    }
+
+    public void set內政手牌上限(Counter 內政手牌上限) {
+        this.內政手牌上限 = 內政手牌上限;
+    }
+
+    public Counter get軍事手牌上限() {
+        return 軍事手牌上限;
+    }
+
+    public void set軍事手牌上限(Counter 軍事手牌上限) {
+        this.軍事手牌上限 = 軍事手牌上限;
+    }
+    private Counter 軍事手牌上限;
     private ScoreBoard scoreBoard;
     private Points workPool;
     private PlayerTable table;
@@ -85,7 +123,7 @@ public class Player {
     }
 
     public boolean isAnyGovernmentCardOnHand() {
-        for (Card card : 手上的牌) {
+        for (Card card : 手上的內政牌) {
             if (card.get右上().equals("政府")) {
                 return true;
             }
@@ -95,7 +133,7 @@ public class Player {
 
     public int getIndexOfGovernmentCardOnHand() {
         int k = -1;
-        for (Card card : 手上的牌) {
+        for (Card card : 手上的內政牌) {
             k++;
             if (card.get右上().equals("政府")) {
                 return k;
@@ -113,7 +151,7 @@ public class Player {
             System.out.println("2. What is the card number on hand?");
             int cardIndex = getIndexOfGovernmentCardOnHand();
             System.out.println("The index is " + cardIndex);
-            Card newGovt = 手上的牌.get(cardIndex);
+            Card newGovt = 手上的內政牌.get(cardIndex);
             System.out.println("3. Now, to replace the Govt with " + newGovt);
 //            this.government = newGovt;
             table.setCard政府(newGovt);
@@ -142,7 +180,7 @@ public class Player {
             System.out.println("2. What is the card number on hand?");
             int cardIndex = getIndexOfGovernmentCardOnHand();
             System.out.println("The index is " + cardIndex);
-            Card newGovt = 手上的牌.get(cardIndex);
+            Card newGovt = 手上的內政牌.get(cardIndex);
             System.out.println("3. Now, to replace the Govt with " + newGovt);
             //ver 0.49
             //this.government = newGovt;           
@@ -176,7 +214,7 @@ public class Player {
             System.out.println("2. What is the card number on hand?");
             int cardIndex = getIndexOfGovernmentCardOnHand();
             System.out.println("The index is " + cardIndex);
-            Card newGovt = 手上的牌.get(cardIndex);
+            Card newGovt = 手上的內政牌.get(cardIndex);
             System.out.println("3. Now, to replace the Govt with " + newGovt);
 
             //ver 0.49
@@ -226,15 +264,24 @@ public class Player {
         return 人力庫;
     }
 
-    public List<Card> get手上的牌() {
-        return 手上的牌;
+    public List<Card> get手上的內政牌() {
+        return 手上的內政牌;
     }
 
-    public void set手上的牌(List<Card> 手上的牌) {
-        this.手上的牌 = 手上的牌;
+    public void set手上的內政牌(List<Card> x) {
+        this.手上的內政牌 = x;
     }
 
-    private List<Card> 手上的牌;
+    public List<Card> get手上的軍事牌() {
+        return 手上的軍事牌;
+    }
+
+    public void set手上的軍事牌(List<Card> 手上的軍事牌) {
+        this.手上的軍事牌 = 手上的軍事牌;
+    }
+
+    private List<Card> 手上的內政牌;
+    private List<Card> 手上的軍事牌;
 
     /**
      * 當想要拿科技牌時，檢查手上和桌上是不是有同卡名的牌 有的話，回是 .true 沒有的話，回不是 .false
@@ -247,13 +294,13 @@ public class Player {
     public boolean is已拿過該科技牌(Card card) {//是不是拿過這張科技牌
 //     * 當想要拿科技牌時，檢查手上和桌上是不是有同卡名的
 //        想要拿的科技牌:card
-//        手上的牌
+//        手上的內政牌
 //        桌上的牌
 //        System.out.println("想要拿取 " + card.toString(1));
 
-        for (int k = 0; k < this.get手上的牌().size(); k++) {
-//            System.out.println("這是目前手上的牌 " + k + " " + this.get手上的牌().get(k).toString(1));
-            if (card.get卡名() == this.get手上的牌().get(k).get卡名()) {
+        for (int k = 0; k < this.get手上的內政牌().size(); k++) {
+//            System.out.println("這是目前手上的牌 " + k + " " + this.get手上的內政牌().get(k).toString(1));
+            if (card.get卡名() == this.get手上的內政牌().get(k).get卡名()) {
                 return true;
             }
 
@@ -272,9 +319,9 @@ public class Player {
 
 //    public boolean isSameAgeLeaderOnHand已拿取時代領袖(Card card) {//是不是拿過這張科技牌
 //        if (card.get右上().equals("領袖")) {
-//            for (int k = 0; k < this.get手上的牌().size(); k++) {
-//                System.out.println(" isSameAgeLeaderOnHande已拿取時代領袖...這是目前手上的牌 " + k + " " + this.get手上的牌().get(k).toString(1));
-//                if (card.get時代() == this.get手上的牌().get(k).get時代()) {
+//            for (int k = 0; k < this.get手上的內政牌().size(); k++) {
+//                System.out.println(" isSameAgeLeaderOnHande已拿取時代領袖...這是目前手上的牌 " + k + " " + this.get手上的內政牌().get(k).toString(1));
+//                if (card.get時代() == this.get手上的內政牌().get(k).get時代()) {
 //                    return true;
 //                }
 //            }
@@ -297,7 +344,7 @@ public class Player {
     public boolean is有沒有奇蹟待建(Card card) {//是不是拿過這張科技牌
 //     * 當想要拿科技牌時，檢查手上和桌上是不是有同卡名的
 //        想要拿的科技牌:card
-//        手上的牌
+//        手上的內政牌
 //        桌上的牌
 //        System.out.println("想要拿取 " + card.toString(1));
 
@@ -317,14 +364,22 @@ public class Player {
 
     //起始設定
     public Player() {
-//        實例化
+//        實例
+        殖民點數 =new Counter();
+        
+        內政手牌上限 =new Counter();
+        軍事手牌上限 =new Counter();
+        建築上限 =new Counter();
         workPool = new Points();
         scoreBoard = new ScoreBoard();
         blueBank = new BlueBank();
         table = new PlayerTable();
         civilCounter = new Counter();
         militaryCounter = new Counter();
-        手上的牌 = new ArrayList<Card>();
+        手上的內政牌 = new ArrayList<Card>();
+        手上的軍事牌 =new ArrayList<Card>();
+        手上的軍事牌.add(new Card(29, "市場的發展", 0, 軍事, 事件, 深綠色, "事件", "每個玩家資源+2", "0"));
+        
         人力庫 = new YellowBank();
 //      設定初值
         scoreBoard.get科技生產().setPoints(1);
@@ -360,8 +415,8 @@ public class Player {
         //
         // 
         //
-        if ((cardNum + 1) > this.get手上的牌().size()) {
-            System.out.println("... index of cards-on-hand should be from 0 to " + (this.get手上的牌().size() - 1));
+        if ((cardNum + 1) > this.get手上的內政牌().size()) {
+            System.out.println("... index of cards-on-hand should be from 0 to " + (this.get手上的內政牌().size() - 1));
 
             return false;
         }
@@ -369,7 +424,7 @@ public class Player {
         //
         //
         //
-        Card card = this.get手上的牌().get(cardNum);
+        Card card = this.get手上的內政牌().get(cardNum);
         //
         // card must stay on hand for at least one round
         //
@@ -381,13 +436,12 @@ public class Player {
 //
 //            return false;
 //        }
-        //this.get桌上的牌().add(this.get手上的牌().get(cardNum));
-//        System.out.print(" ...這張牌, 類型=" + this.get手上的牌().get(cardNum).get類型());
+        //this.get桌上的牌().add(this.get手上的內政牌().get(cardNum));
+//        System.out.print(" ...這張牌, 類型=" + this.get手上的內政牌().get(cardNum).get類型());
         //        當打出科技牌的時候
 //        灌溉為例
-//        System.out.println(" 右上=" + this.get手上的牌().get(cardNum).get右上());
-
-//        if (this.get手上的牌().get(cardNum).get類型() == CardType.科技) {
+//        System.out.println(" 右上=" + this.get手上的內政牌().get(cardNum).get右上());
+//        if (this.get手上的內政牌().get(cardNum).get類型() == CardType.科技) {
         if (card.get類型() == CardType.領袖) {
 //          
 //            table.get
@@ -395,7 +449,7 @@ public class Player {
 //            table.getLeaderDeck().
         } else if (card.get類型() == CardType.科技) {
 //            System.out.println("123");
-            switch (this.get手上的牌().get(cardNum).get右上()) {
+            switch (this.get手上的內政牌().get(cardNum).get右上()) {
                 case "政府":
                     table.setCard政府(card);
 
@@ -404,8 +458,8 @@ public class Player {
 
 //                case "農場": {
 //                    System.out.println("準備設定已打出");
-//                    this.農場[this.get手上的牌().get(cardNum).get時代()].set打出(true);
-//                    System.out.println("打出了嗎?" + this.農場[this.get手上的牌().get(cardNum).get時代()].is打出());
+//                    this.農場[this.get手上的內政牌().get(cardNum).get時代()].set打出(true);
+//                    System.out.println("打出了嗎?" + this.農場[this.get手上的內政牌().get(cardNum).get時代()].is打出());
 //                }
                 // ver 0.44 農場 [A-農業--農場  黃點:0 藍點:0] 
                 case "實驗室":
@@ -442,23 +496,24 @@ public class Player {
             //
             // eventually we will find proper location for different types of cards
             //
-//            this.get桌上的牌().add(this.get手上的牌().get(cardNum));
+//            this.get桌上的牌().add(this.get手上的內政牌().get(cardNum));
             // ver 0.48
             System.out.println("... DO AS WE CAN DO TO PUT IT TO PROPER GROUP!!!");
             table.addCardToOther(card);
 
         }
-        
-        this.get手上的牌().remove(cardNum);
+
+        this.get手上的內政牌().remove(cardNum);
 
         return true;
     }
-     public boolean doPlayCard革命(int cardNum, int roundNum) throws AgesException {
+
+    public boolean doPlayCard革命(int cardNum, int roundNum) throws AgesException {
         //
         // 
         //
-        if ((cardNum + 1) > this.get手上的牌().size()) {
-            System.out.println("... index of cards-on-hand should be from 0 to " + (this.get手上的牌().size() - 1));
+        if ((cardNum + 1) > this.get手上的內政牌().size()) {
+            System.out.println("... index of cards-on-hand should be from 0 to " + (this.get手上的內政牌().size() - 1));
 
             return false;
         }
@@ -466,7 +521,7 @@ public class Player {
         //
         //
         //
-        Card card = this.get手上的牌().get(cardNum);
+        Card card = this.get手上的內政牌().get(cardNum);
         //
         // card must stay on hand for at least one round
         //
@@ -478,13 +533,12 @@ public class Player {
 //
 //            return false;
 //        }
-        //this.get桌上的牌().add(this.get手上的牌().get(cardNum));
-//        System.out.print(" ...這張牌, 類型=" + this.get手上的牌().get(cardNum).get類型());
+        //this.get桌上的牌().add(this.get手上的內政牌().get(cardNum));
+//        System.out.print(" ...這張牌, 類型=" + this.get手上的內政牌().get(cardNum).get類型());
         //        當打出科技牌的時候
 //        灌溉為例
-//        System.out.println(" 右上=" + this.get手上的牌().get(cardNum).get右上());
-
-//        if (this.get手上的牌().get(cardNum).get類型() == CardType.科技) {
+//        System.out.println(" 右上=" + this.get手上的內政牌().get(cardNum).get右上());
+//        if (this.get手上的內政牌().get(cardNum).get類型() == CardType.科技) {
         if (card.get類型() == CardType.領袖) {
 //          
 //            table.get
@@ -492,7 +546,7 @@ public class Player {
 //            table.getLeaderDeck().
         } else if (card.get類型() == CardType.科技) {
 //            System.out.println("123");
-            switch (this.get手上的牌().get(cardNum).get右上()) {
+            switch (this.get手上的內政牌().get(cardNum).get右上()) {
                 case "政府":
                     table.setCard政府(card);
 
@@ -501,8 +555,8 @@ public class Player {
 
 //                case "農場": {
 //                    System.out.println("準備設定已打出");
-//                    this.農場[this.get手上的牌().get(cardNum).get時代()].set打出(true);
-//                    System.out.println("打出了嗎?" + this.農場[this.get手上的牌().get(cardNum).get時代()].is打出());
+//                    this.農場[this.get手上的內政牌().get(cardNum).get時代()].set打出(true);
+//                    System.out.println("打出了嗎?" + this.農場[this.get手上的內政牌().get(cardNum).get時代()].is打出());
 //                }
                 // ver 0.44 農場 [A-農業--農場  黃點:0 藍點:0] 
                 case "實驗室":
@@ -539,14 +593,14 @@ public class Player {
             //
             // eventually we will find proper location for different types of cards
             //
-//            this.get桌上的牌().add(this.get手上的牌().get(cardNum));
+//            this.get桌上的牌().add(this.get手上的內政牌().get(cardNum));
             // ver 0.48
             System.out.println("... DO AS WE CAN DO TO PUT IT TO PROPER GROUP!!!");
             table.addCardToOther(card);
 
         }
-        
-        this.get手上的牌().remove(cardNum);
+
+        this.get手上的內政牌().remove(cardNum);
 
         return true;
     }
@@ -557,7 +611,8 @@ public class Player {
 
         return true;
     }
-public boolean doDestroy(int category, int age) throws AgesException {
+
+    public boolean doDestroy(int category, int age) throws AgesException {
         table.getCard(category, age).getYellowPoints().addPoints(-1);
         workPool.addPoints(1);
 
@@ -579,12 +634,12 @@ public boolean doDestroy(int category, int age) throws AgesException {
      * @throws AgesException
      */
     public boolean doPlayCard(int cardNum, int type) throws AgesException {
-        Card card = this.手上的牌.get(cardNum);
+        Card card = this.手上的內政牌.get(cardNum);
         System.out.println("DOING...打政府牌" + card);
         System.out.println("DOING...打政府牌" + card.get右上());
 
-//        if (this.手上的牌.get(cardNum).get類型() == CardType.政府) {
-        if (this.手上的牌.get(cardNum).get右上().equals("政府")) {
+//        if (this.手上的內政牌.get(cardNum).get類型() == CardType.政府) {
+        if (this.手上的內政牌.get(cardNum).get右上().equals("政府")) {
 
             if (type == 0) {
                 System.out.println("和平方式");
@@ -613,18 +668,18 @@ public boolean doDestroy(int category, int age) throws AgesException {
         //TODO check any not allowed...
         this.set失敗原因("無失敗紀錄");
 
-        //ver 0.56
-        if (card.get類型() != CardType.奇蹟) {
-            if (手上的牌.size() >= table.getCard政府().getWhite().getPoints()) {
-                this.set失敗原因("Maximun onhand card count is " + table.getCard政府().getWhite().getPoints() + " based on Government's white!");
-                return false;
-            }
-        }
+//        //ver 0.56
+//        if (card.get類型() != CardType.奇蹟) {
+//            if (手上的內政牌.size() >= table.getCard政府().getWhite().getPoints()) {
+//                this.set失敗原因("Maximun onhand card count is " + table.getCard政府().getWhite().getPoints() + " based on Government's white!");
+//                return false;
+//            }
+//        }
 
-        if (!civilCounter.isEnoughToPay(cost)) {//如果內政點數不夠支付的話
-            this.set失敗原因("NOT ENOUGH CIVIL POINTS TO PAY THIS CARD," + card.get卡名());
-            return false;
-        }
+//        if (!civilCounter.isEnoughToPay(cost)) {//如果內政點數不夠支付的話
+//            this.set失敗原因("NOT ENOUGH CIVIL POINTS TO PAY THIS CARD," + card.get卡名());
+//            return false;
+//        }
 
         switch (card.get類型()) {
             case CardType.奇蹟: {
@@ -632,7 +687,7 @@ public boolean doDestroy(int category, int age) throws AgesException {
                     this.set失敗原因("還有尚未完成的奇蹟" + card.get卡名());
                     return false;
                 } else {
-//                    手上的牌.add(card);
+//                    手上的內政牌.add(card);
                     table.get奇蹟待建區().add(card);
                 }
                 break;
@@ -648,7 +703,7 @@ public boolean doDestroy(int category, int age) throws AgesException {
 ////                     System.out.println("還沒拿過"+card.時代+"時代的領袖牌");
 //                    set已拿取時代領袖(card.時代);//          如果沒有拿過，則依照該領袖牌的時代，在玩家數據內做拿過的記錄
 //
-//                    手上的牌.add(card);
+//                    手上的內政牌.add(card);
 //                }
 //                break;
 //            }
@@ -658,7 +713,7 @@ public boolean doDestroy(int category, int age) throws AgesException {
                     System.out.println("   ... this age is checked, you cannot get this age's leader card any more!");
                 } else {
 
-                    手上的牌.add(card);
+                    手上的內政牌.add(card);
                     table.getLeaderDeck().setTaken(card.get時代());
                 }
                 break;
@@ -668,14 +723,14 @@ public boolean doDestroy(int category, int age) throws AgesException {
             case CardType.科技: {
 //                System.out.println("   ... NEED TO CHECH IF ANY 科技 CARD ON HAND OR ON TABLE");
 
-                手上的牌.add(card);
+                手上的內政牌.add(card);
 
                 break;
             }
             case CardType.行動: {
 //                System.out.println("   ... NEED TO PERFORM 行動 ...");
 
-                手上的牌.add(card);
+                手上的內政牌.add(card);
                 break;
             }
             default:
@@ -683,7 +738,7 @@ public boolean doDestroy(int category, int age) throws AgesException {
         //拿牌扣點
 //        set內政點數(get內政點數() - cost);
 
-        getCivilCounter().payPoint(cost);
+//        getCivilCounter().payPoint(cost);
         return true;
     }
 //
@@ -722,6 +777,10 @@ public boolean doDestroy(int category, int age) throws AgesException {
 //        System.out.println("\n   " + get點數());
         System.out.println("   內政點數 白點:" + getCivilCounter().getPoint());
         System.out.println("   軍事點數 紅點:" + getMilitaryCounter().getPoint());
+        System.out.println("   建築上限　:"+get建築上限().getPoint());
+        System.out.println("   內政手牌上限　:"+get內政手牌上限().getPoint());
+        System.out.println("   軍事手牌上限　:"+get軍事手牌上限().getPoint());
+        System.out.println("   殖民點數　:"+get殖民點數().getPoint());
         System.out.println(scoreBoard);
 
     }
@@ -786,8 +845,10 @@ public boolean doDestroy(int category, int age) throws AgesException {
 //        showInitCards();
         table.show();
 
-        System.out.print("\n   手牌 (上限值=" + table.getOnHandLimit() + ")");
+        System.out.print("\n手牌內政牌");
         showCardsOnHand();
+        System.out.print("\n手牌軍事牌");
+        show手上的軍事牌();
         System.out.println("");
     }
 
@@ -804,8 +865,15 @@ public boolean doDestroy(int category, int age) throws AgesException {
 //    }
     public void showCardsOnHand() {
 
-        for (int k = 0; k < 手上的牌.size(); k++) {
-            System.out.print(" " + k + 手上的牌.get(k).toString(15));
+        for (int k = 0; k < 手上的內政牌.size(); k++) {
+            System.out.print(" " + k + 手上的內政牌.get(k).toString(15));
+        }
+        System.out.println();
+    }
+     public void show手上的軍事牌() {
+
+        for (int k = 0; k < 手上的軍事牌.size(); k++) {
+            System.out.print(" " + k + 手上的軍事牌.get(k).toString(15));
         }
         System.out.println();
     }
@@ -818,7 +886,7 @@ public boolean doDestroy(int category, int age) throws AgesException {
 //    }
 //
 //    public void show() {
-//        System.out.print(" 手上的牌 ");
+//        System.out.print(" 手上的內政牌 ");
 //        show手上的牌();
 //        System.out.print("  礦場=" + 礦山);
 //        System.out.print("  神廟=" + 神廟);

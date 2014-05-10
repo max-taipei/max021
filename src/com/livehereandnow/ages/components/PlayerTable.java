@@ -5,12 +5,18 @@
  */
 package com.livehereandnow.ages.components;
 
+import static com.livehereandnow.ages.components.CardType.事件;
 import static com.livehereandnow.ages.components.CardType.內政;
+import static com.livehereandnow.ages.components.CardType.戰術;
 import static com.livehereandnow.ages.components.CardType.棕色;
 import static com.livehereandnow.ages.components.CardType.橙色;
+import static com.livehereandnow.ages.components.CardType.深紅色;
+import static com.livehereandnow.ages.components.CardType.淺綠色;
 import static com.livehereandnow.ages.components.CardType.灰色;
 import static com.livehereandnow.ages.components.CardType.科技;
 import static com.livehereandnow.ages.components.CardType.紅色;
+import static com.livehereandnow.ages.components.CardType.藍色;
+import static com.livehereandnow.ages.components.CardType.軍事;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +29,34 @@ public class PlayerTable extends Object {
 
     private LeaderDeck leader;
     private List<Card> 奇蹟待建區;
+    private List<Card> 戰術執行區;
+
+    public List<Card> get戰術執行區() {
+        return 戰術執行區;
+    }
+
+    public void set戰術執行區(List<Card> x) {
+        this.戰術執行區 = x;
+    }
+    private List<Card> 特殊科技區;
     private List<Card> 奇蹟完成區;
+
+    public List<Card> get特殊科技區() {
+        return 特殊科技區;
+    }
+
+    public void set特殊科技區(List<Card> 特殊科技區) {
+        this.特殊科技區 = 特殊科技區;
+    }
+    private List<Card> 殖民領土;
+
+    public List<Card> get殖民領土() {
+        return 殖民領土;
+    }
+
+    public void set殖民領土(List<Card> 殖民領土) {
+        this.殖民領土 = 殖民領土;
+    }
 
     public List<Card> get奇蹟待建區() {
         return 奇蹟待建區;
@@ -46,19 +79,19 @@ public class PlayerTable extends Object {
 //    }
     private Card cards政府;
 
-    public int  getBuildingLimit(){
+    public int getBuildingLimit() {
         //君主制,神權政治
-        
-        if ( cards政府.get卡名().equals("君主制")){
-           return  3;          
+
+        if (cards政府.get卡名().equals("君主制")) {
+            return 3;
         }
-        if ( cards政府.get卡名().equals("神權政治")){
-           return  3;          
+        if (cards政府.get卡名().equals("神權政治")) {
+            return 3;
         }
-        
-        
+
         return 2;
     }
+
     public List<Card> get5x4() {
         List<Card> list = new ArrayList<>();
 
@@ -200,6 +233,41 @@ public class PlayerTable extends Object {
         //   System.out.println();
     }
 
+    public void show殖民領土() {
+//        for (int k = 0; k < 桌上的牌.size(); k++) {
+//            System.out.print(" " + 桌上的牌.get(k).toString(1));
+        System.out.print("殖民領土區 ");
+
+        for (int k = 0; k < get殖民領土().size(); k++) {
+            System.out.print(" " + get殖民領土().get(k).toString(2));
+
+        }
+        System.out.println("");
+        //   System.out.println();
+    }
+        public void show戰術() {
+//        for (int k = 0; k < 桌上的牌.size(); k++) {
+//            System.out.print(" " + 桌上的牌.get(k).toString(1));
+        System.out.print("戰術 ");
+        for (int k = 0; k < get戰術執行區().size(); k++) {
+            System.out.print(" " + get戰術執行區().get(k).toString(3));
+
+        }
+        System.out.println("");
+
+    }
+              public void show特殊科技區() {
+//        for (int k = 0; k < 桌上的牌.size(); k++) {
+//            System.out.print(" " + 桌上的牌.get(k).toString(1));
+        System.out.print("特殊科技區 ");
+        for (int k = 0; k < get特殊科技區().size(); k++) {
+            System.out.print(" " + get特殊科技區().get(k).toString(3));
+
+        }
+        System.out.println("");
+
+    }
+
     public LeaderDeck getLeaderDeck() {
         return leader;
     }
@@ -209,8 +277,14 @@ public class PlayerTable extends Object {
     }
 
     public PlayerTable() {
+        殖民領土 = new ArrayList<Card>();
         奇蹟待建區 = new ArrayList<Card>();
+        戰術執行區 = new ArrayList<Card>();
         奇蹟完成區 = new ArrayList<Card>();
+        特殊科技區 = new ArrayList<Card>();
+        殖民領土.add(new Card(82, "歷史悠久之地", 1, 軍事, 事件, 淺綠色, "領土", "笑臉+1，文化+6", "0"));
+        戰術執行區.add(new Card(100, "中世紀軍隊", 1, 軍事, 戰術, 深紅色, "戰術", "步馬+2", "0"));
+        特殊科技區.add(new Card(45, "製圖術", 1, 內政, 科技, 藍色, "殖民", "軍力+1，殖民點數+2", "4"));
         leader = new LeaderDeck();
         Card NOCARD = new Card(999, "", -1, CardType.EMPTY);
 //        leader = NOCARD;
@@ -270,7 +344,7 @@ public class PlayerTable extends Object {
 //
 //    }
     private void show政府() {
-        System.out.print("    政府 " + cards政府.toString(7)+ " Building Number limit: "+getBuildingLimit());
+        System.out.print("    政府 " + cards政府.toString(7) + " Building Number limit: " + getBuildingLimit());
 
     }
 
@@ -300,5 +374,8 @@ public class PlayerTable extends Object {
         showCardsOnTable___OTHERS();
         show建造中的奇蹟();
         show已完成的奇蹟();
+        show殖民領土();
+        show戰術();
+        show特殊科技區();
     }
 }

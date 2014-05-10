@@ -22,7 +22,7 @@ public class YellowBank extends Points{
    
     @Override
     public String toString() {
-        return "黃點:" + this.points + "\n   幸福指數:"+happy.getPoints();
+        return "黃點:" + this.points + "\n   (笑臉)幸福指數:"+happy.getPoints();
     }
     
 }

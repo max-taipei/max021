@@ -18,6 +18,7 @@ public class Cards implements CardType {
     List<Card> cards;
     List<Card> initCards;
     Card init政府;
+    
     Card init實驗室;
     Card init神廟;
     Card init農場;

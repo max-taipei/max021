@@ -267,6 +267,9 @@ public class Engine {
     public boolean doVersion() {
       //  System.out.println(" TODO   [A內政-亞歷山大圖書館 科技生產+1，文化生產+1，內政手牌上限+1，軍事手牌上限+1]  ");
         //getBuildingLimit()
+        System.out.println("  === ver 0.78 ===  2014-5-10, 16:47, by Max　");
+        System.out.println("    1. 建立遊戲引擎的變量，能夠運作的地方");
+        
                     System.out.println("  === ver 0.77 ===  2014-5-9, 11:47, by Max　");
         System.out.println("    1. 解析從if改為swtich，全部292張牌已經完全解析78 ，所有解析後的動作都先抑制掉了");
         System.out.println("    FIX 重複解析");
